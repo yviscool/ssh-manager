@@ -1,0 +1,45 @@
+{
+  "name": "ssh-manager-cli",
+  "version": "0.1.4",
+  "description": "An ssh manager",
+  "main": "./bin/ssh-manager.js",
+  "preferGlobal": true,
+  "dependencies": {
+    "colors": "^1.1.2",
+    "commander": "^2.11.0",
+    "inquirer": "^3.2.2",
+    "mkdirp": "^0.5.1",
+    "prettyjson": "^1.2.1",
+    "uuid": "^3.1.0"
+  },
+  "devDependencies": {
+    "eslint": "^4.9.0",
+    "eslint-config-standard": "^10.2.1",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-node": "^5.2.0",
+    "eslint-plugin-promise": "^3.6.0",
+    "eslint-plugin-standard": "^3.0.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Webdown404/ssh-manager.git"
+  },
+  "author": "webdown404",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Webdown404/ssh-manager/issues"
+  },
+  "homepage": "https://github.com/Webdown404/ssh-manager#readme",
+  "directories": {
+    "lib": "lib"
+  },
+  "bin": {
+    "ssh-manager": "./bin/ssh-manager.js"
+  },
+  "keywords": [
+    "ssh"
+  ]
+}
