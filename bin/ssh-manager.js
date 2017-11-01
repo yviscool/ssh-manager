@@ -1,106 +1,95 @@
 #!/usr/bin/env node
 
 let program = require('commander')
-let colors = require('colors')
 let inquirer = require('inquirer')
 let prompt = inquirer.createPromptModule()
+let colors = require('../lib/colors-custom')
 let configurationManager = require('../lib/ConfigurationManager.js')
+let SSHConnection = require('../lib/SSHConnection')
+let ConnectionConfiguration = require('../lib/ConnectionConfiguration')
 
-colors.setTheme({
-	silly: 'rainbow',
-	input: 'grey',
-	verbose: 'cyan',
-	prompt: 'grey',
-	info: 'white',
-	success: 'green',
-	data: 'grey',
-	help: 'cyan',
-	warn: 'yellow',
-	debug: 'blue',
-	error: 'red'
-})
+async function getConnectionConfigurationProperty (message, name) {
+    let inputNameInquirer = {
+        type: 'input',
+        message: message,
+        name: name
+    }
 
-function startSSH (user, server) {
-	console.log('ssh ' + user + '@' + server)
+    let property = await prompt(inputNameInquirer)
+
+    return property[name]
 }
 
-async function getProjectProperty (message, name) {
-	let inputNameInquirer = {
-		type: 'input',
-		message: message,
-		name: name
-	}
+async function selectConnectionConfiguration () {
+    let allConnectionConfigurationChoices = configurationManager.getConnectionConfigurationList()
 
-	let property = await prompt(inputNameInquirer)
+    if (allConnectionConfigurationChoices.length === 0) {
+        console.log(colors.error(new Error('no connection configuration found into "' + configurationManager.getConnectionConfigurationFilePath() + '". Please use "add" command.')))
+        exit(1)
+    }
 
-	return property[name]
+    let selectConnectionConfigurationInquirer = {
+        type: 'list',
+        message: 'Select an connection',
+        name: 'uuid',
+        choices: allConnectionConfigurationChoices
+    }
+
+    let result = await prompt(selectConnectionConfigurationInquirer)
+    let selectedConnectionConfiguration = null
+
+    try {
+        selectedConnectionConfiguration = configurationManager.getConnectionConfiguration(result.uuid)
+    } catch (e) {
+        exit(1)
+    }
+
+    return selectedConnectionConfiguration
 }
 
-async function selectProject () {
-	let allProjectName = configurationManager.getProjectsList()
-
-	if (allProjectName.length === 0) {
-		console.log(colors.error(new Error('no project found into projects.json. Please use "add" command.')))
-		process.exit()
-	}
-
-	let selectProjectInquirer = {
-		type: 'list',
-		message: 'Select an project',
-		name: 'uuid',
-		choices: allProjectName
-	}
-
-	let result = await prompt(selectProjectInquirer)
-
-	let selectedProject = null
-	try {
-		selectedProject = configurationManager.getProject(result.uuid)
-	} catch (e) {
-		console.log(colors.error(e))
-		process.exit()
-	}
-
-	return selectedProject
+function exit (code) {
+    process.exit(code)
 }
 
 program
-	.version('1.0.0')
-	.description('A SSH manager to store a list of project connection configuration')
+    .version('1.0.0')
+    .description('A SSH manager to store a list of SSH connection configuration')
 
 program
-	.command('show')
-	.description('show all projects SSH configurations')
-	.action(() => {
-		configurationManager.showProjects()
-	})
+    .command('show')
+    .description('show all projects SSH configurations')
+    .action(() => {
+        configurationManager.showConnectionConfigurations()
+    })
 
 program
-	.command('delete')
-	.description('delete an project SSH configuration')
-	.action(async () => {
-		let projectConfiguration = await selectProject()
-		configurationManager.deleteProject(projectConfiguration.uuid)
-	})
+    .command('delete')
+    .description('delete an SSH connection configuration')
+    .action(async () => {
+        let projectConfiguration = await selectConnectionConfiguration()
+        configurationManager.deleteConnectionConfiguration(projectConfiguration.uuid)
+    })
 
 program
-	.command('add')
-	.description('add a new project SSH configuration')
-	.action(async () => {
-		let name = await getProjectProperty('Project name', 'name')
-		let description = await getProjectProperty('Description', 'description')
-		let user = await getProjectProperty('User', 'user')
-		let server = await getProjectProperty('Server', 'server')
+    .command('add')
+    .description('add a new SSH connection configuration')
+    .action(async () => {
+        let name = await getConnectionConfigurationProperty('Connection name', 'name')
+        let description = await getConnectionConfigurationProperty('Description', 'description')
+        let user = await getConnectionConfigurationProperty('User', 'user')
+        let server = await getConnectionConfigurationProperty('Server', 'server')
 
-		configurationManager.addProject(name, description, user, server)
-	})
+        configurationManager.addConnectionConfiguration(name, description, user, server)
+    })
 
 program
-	.command('connect')
-	.description('show SSH connection command line')
-	.action(async () => {
-		let projectConfiguration = await selectProject()
-		startSSH(projectConfiguration.user, projectConfiguration.server)
-	})
+    .command('connect')
+    .description('start an SSH connection')
+    .action(async () => {
+        let projectConfiguration = await selectConnectionConfiguration()
+        let cc = new ConnectionConfiguration(projectConfiguration)
+        SSHConnection.init(cc)
+        SSHConnection.start(exit)
+    })
 
 program.parse(process.argv)
