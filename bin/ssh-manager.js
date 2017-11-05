@@ -4,7 +4,7 @@ let program = require('commander')
 let inquirer = require('inquirer')
 let prompt = inquirer.createPromptModule()
 let colors = require('../lib/colors-custom')
-let configurationManager = require('../lib/ConfigurationManager.js')
+let cm = require('../app/configuration-manager')
 let SSHConnection = require('../lib/SSHConnection')
 let ConnectionConfiguration = require('../lib/ConnectionConfiguration')
 
@@ -22,10 +22,10 @@ async function getConnectionConfigurationProperty (message, name, defaultValue =
 }
 
 async function selectConnectionConfiguration () {
-    let allConnectionConfigurationChoices = configurationManager.getConnectionConfigurationList()
+    let allConnectionConfigurationChoices = cm.getConnectionConfigurationList()
 
     if (allConnectionConfigurationChoices.length === 0) {
-        console.log(colors.error(new Error('no connection configuration found into "' + configurationManager.getConnectionConfigurationFilePath() + '". Please use "add" command.')))
+        console.log(colors.error(new Error('no connection configuration found into "' + cm.ccfp + '". Please use "add" command.')))
         exit(1)
     }
 
@@ -40,7 +40,7 @@ async function selectConnectionConfiguration () {
     let selectedConnectionConfiguration = null
 
     try {
-        selectedConnectionConfiguration = configurationManager.getConnectionConfiguration(result.uuid)
+        selectedConnectionConfiguration = cm.getConnectionConfiguration(result.uuid)
     } catch (e) {
         exit(1)
     }
@@ -66,12 +66,12 @@ async function addAction () {
     let server = await getConnectionConfigurationProperty('Server', 'server')
     let port = await getConnectionConfigurationProperty('Port', 'port', 22)
 
-    configurationManager.addConnectionConfiguration(name, description, user, server, port)
+    cm.addConnectionConfiguration(name, description, user, server, port)
 }
 
 async function deleteAction () {
     let projectConfiguration = await selectConnectionConfiguration()
-    configurationManager.deleteConnectionConfiguration(projectConfiguration.uuid)
+    cm.deleteConnectionConfiguration(projectConfiguration.uuid)
 }
 
 program
@@ -82,7 +82,7 @@ program
     .command('show')
     .description('show all projects SSH configurations')
     .action(() => {
-        configurationManager.showConnectionConfigurations()
+        cm.showConnectionConfigurations()
     })
 
 program
