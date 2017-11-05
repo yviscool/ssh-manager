@@ -52,6 +52,28 @@ function exit (code) {
     process.exit(code)
 }
 
+async function connectAction () {
+    let projectConfiguration = await selectConnectionConfiguration()
+    let cc = new ConnectionConfiguration(projectConfiguration)
+    SSHConnection.init(cc)
+    SSHConnection.start(exit)
+}
+
+async function addAction () {
+    let name = await getConnectionConfigurationProperty('Connection name', 'name')
+    let description = await getConnectionConfigurationProperty('Description', 'description')
+    let user = await getConnectionConfigurationProperty('User', 'user')
+    let server = await getConnectionConfigurationProperty('Server', 'server')
+    let port = await getConnectionConfigurationProperty('Port', 'port', 22)
+
+    configurationManager.addConnectionConfiguration(name, description, user, server, port)
+}
+
+async function deleteAction () {
+    let projectConfiguration = await selectConnectionConfiguration()
+    configurationManager.deleteConnectionConfiguration(projectConfiguration.uuid)
+}
+
 program
     .version('1.0.0')
     .description('A SSH manager to store a list of SSH connection configuration')
@@ -66,32 +88,21 @@ program
 program
     .command('delete')
     .description('delete an SSH connection configuration')
-    .action(async () => {
-        let projectConfiguration = await selectConnectionConfiguration()
-        configurationManager.deleteConnectionConfiguration(projectConfiguration.uuid)
-    })
+    .action(deleteAction)
 
 program
     .command('add')
     .description('add a new SSH connection configuration')
-    .action(async () => {
-        let name = await getConnectionConfigurationProperty('Connection name', 'name')
-        let description = await getConnectionConfigurationProperty('Description', 'description')
-        let user = await getConnectionConfigurationProperty('User', 'user')
-        let server = await getConnectionConfigurationProperty('Server', 'server')
-        let port = await getConnectionConfigurationProperty('Port', 'port', 22)
-
-        configurationManager.addConnectionConfiguration(name, description, user, server, port)
-    })
+    .action(addAction)
 
 program
     .command('connect')
     .description('start an SSH connection')
-    .action(async () => {
-        let projectConfiguration = await selectConnectionConfiguration()
-        let cc = new ConnectionConfiguration(projectConfiguration)
-        SSHConnection.init(cc)
-        SSHConnection.start(exit)
-    })
+    .action(connectAction)
 
 program.parse(process.argv)
+
+// launch connect command if no argument given
+if (program.args.length === 0) {
+    connectAction()
+}
