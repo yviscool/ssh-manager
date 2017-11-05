@@ -100,6 +100,13 @@ program
     .description('start an SSH connection')
     .action(connectAction)
 
+program
+    .command('*')
+    .action(() => {
+        console.log(colors.error('unknown command : please use "--help" option to show available commands'))
+        exit(1)
+    })
+
 program.parse(process.argv)
 
 // launch connect command if no argument given
