@@ -8,11 +8,12 @@ let configurationManager = require('../lib/ConfigurationManager.js')
 let SSHConnection = require('../lib/SSHConnection')
 let ConnectionConfiguration = require('../lib/ConnectionConfiguration')
 
-async function getConnectionConfigurationProperty (message, name) {
+async function getConnectionConfigurationProperty (message, name, defaultValue = null) {
     let inputNameInquirer = {
         type: 'input',
         message: message,
-        name: name
+        name: name,
+        default: defaultValue
     }
 
     let property = await prompt(inputNameInquirer)
@@ -78,8 +79,9 @@ program
         let description = await getConnectionConfigurationProperty('Description', 'description')
         let user = await getConnectionConfigurationProperty('User', 'user')
         let server = await getConnectionConfigurationProperty('Server', 'server')
+        let port = await getConnectionConfigurationProperty('Port', 'port', 22)
 
-        configurationManager.addConnectionConfiguration(name, description, user, server)
+        configurationManager.addConnectionConfiguration(name, description, user, server, port)
     })
 
 program
