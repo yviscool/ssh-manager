@@ -55,8 +55,8 @@ function exit (code) {
 async function connectAction () {
     let projectConfiguration = await selectConnectionConfiguration()
     let cc = new ConnectionConfiguration(projectConfiguration)
-    SSHConnection.init(cc)
-    SSHConnection.start(exit)
+    let sc = new SSHConnection(cc)
+    sc.start(exit)
 }
 
 async function addAction () {
