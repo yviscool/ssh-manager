@@ -8,6 +8,8 @@ This project required :
 ## Presentation
 This node module provide a way to store several SSH configurations into a centralized SSH manager. With it, you can create / modify / delete an SSH connection configuration and start an SSH connection.
 
+![](http://i.imgur.com/GgEqTfo.gif)
+
 ## Installation
 To install this project globally :
 ```shell
