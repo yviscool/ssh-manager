@@ -1,6 +1,6 @@
 {
   "name": "ssh-manager-cli",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "An ssh manager",
   "main": "./bin/ssh-manager.js",
   "preferGlobal": true,
@@ -10,6 +10,7 @@
     "inquirer": "^3.2.2",
     "mkdirp": "^0.5.1",
     "prettyjson": "^1.2.1",
+    "ssh2": "^0.5.5",
     "uuid": "^3.1.0"
   },
   "devDependencies": {

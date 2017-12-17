@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 
-let program = require('commander')
-let colors = require('../app/colors-custom')
-let ConfigurationCommand = require('../lib/command/ConfigurationCommand')
-let ConnectionCommand = require('../lib/command/ConnectionCommand')
+const program = require('commander')
+const colors = require('../app/colors-custom')
+const ConfigurationCommand = require('../lib/command/ConfigurationCommand')
+const ConnectionCommand = require('../lib/command/ConnectionCommand')
 
 program
     .version('1.0.0')
