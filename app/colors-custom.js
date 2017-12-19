@@ -9,7 +9,7 @@ colors.setTheme({
     success: 'green',
     data: 'grey',
     help: 'cyan',
-    warn: 'yellow',
+    warning: 'yellow',
     debug: 'blue',
     error: 'red'
 })
