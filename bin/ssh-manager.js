@@ -4,9 +4,10 @@ const program = require('commander')
 const colors = require('../app/colors-custom')
 const ConfigurationCommand = require('../lib/command/ConfigurationCommand')
 const ConnectionCommand = require('../lib/command/ConnectionCommand')
+const version = require('../package').version
 
 program
-    .version('1.0.0')
+    .version(version)
     .description('A SSH manager to store a list of SSH connection configuration')
 
 program
