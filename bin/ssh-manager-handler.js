@@ -6,6 +6,8 @@ const ConfigurationCommand = require('../lib/command/ConfigurationCommand')
 const ConnectionCommand = require('../lib/command/ConnectionCommand')
 const version = require('../package').version
 
+process.stdin.on('data', exitOnSIGINT)
+
 program
     .version(version)
     .description('A SSH manager to store a list of SSH connection configuration')
@@ -32,4 +34,10 @@ program.parse(process.argv)
 // launch connect command if no argument given
 if (program.args.length === 0) {
     ConnectionCommand.run()
+}
+
+function exitOnSIGINT (key) {
+    if (key.toString() === '\u0003') {
+        process.exit(1)
+    }
 }
