@@ -1,5 +1,7 @@
 # SSH Manager
 
+[![Build Status](https://travis-ci.org/Webdown404/ssh-manager.svg?branch=master)](https://travis-ci.org/Webdown404/ssh-manager)
+
 ## Requirement
 This project required :
 - node >= 7.10.1
