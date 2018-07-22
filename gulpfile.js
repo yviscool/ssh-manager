@@ -1,4 +1,5 @@
 const gulp = require('gulp')
+const mocha = require('gulp-mocha')
 const eslint = require('gulp-eslint')
 
 gulp.task('lint', () => {
@@ -8,4 +9,11 @@ gulp.task('lint', () => {
         .pipe(eslint.failAfterError())
 })
 
-gulp.task('default', ['lint'])
+gulp.task('unit-test', () => {
+    return gulp.src(['test/**/*Test.js'], { read: false })
+        .pipe(mocha({
+            reporter: 'spec'
+        }))
+})
+
+gulp.task('default', ['unit-test', 'lint'])

@@ -1,5 +1,11 @@
 {
     "extends": "standard",
+    "plugins": [
+        "mocha"
+    ],
+    "env": {
+        "mocha": true
+    },
     "rules": {
         "indent": [2, 4, { "SwitchCase": 1 }],
         "no-tabs": 0
