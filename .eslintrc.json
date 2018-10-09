@@ -1,13 +1,22 @@
 {
-    "extends": "standard",
+    "extends": "eslint:recommended",
     "plugins": [
         "mocha"
     ],
     "env": {
-        "mocha": true
+        "mocha": true,
+        "amd": true,
+        "browser": true,
+        "commonjs": true,
+        "node": true,
+        "es6": true
     },
     "rules": {
         "indent": [2, 4, { "SwitchCase": 1 }],
-        "no-tabs": 0
+        "no-tabs": 0,
+        "no-console": "off"
+    },
+    "parserOptions": {
+        "ecmaVersion": 8
     }
 }
