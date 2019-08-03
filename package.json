@@ -1,6 +1,6 @@
 {
   "name": "ssh-manager-cli",
-  "version": "1.4.2",
+  "version": "1.4.3",
   "description": "A ssh manager",
   "main": "./bin/ssh-manager.sh",
   "preferGlobal": true,
