@@ -1,10 +1,11 @@
 # SSH Manager
 
-[![Build Status](https://travis-ci.org/Webdown404/ssh-manager.svg?branch=master)](https://travis-ci.org/Webdown404/ssh-manager)
+![CI Status](https://github.com/Webdown404/ssh-manager/workflows/.github/workflows/ci.yml/badge.svg)
+![Audit Status](https://github.com/Webdown404/ssh-manager/workflows/.github/workflows/audit.yml/badge.svg)
 
 ## Requirement
 This project required :
-- node >= 7.10.1
+- node >= 10
 - npm
 
 ## Presentation
