@@ -1,7 +1,7 @@
 # SSH Manager
 
-![CI Status](https://github.com/Webdown404/ssh-manager/workflows/.github/workflows/ci.yml/badge.svg)
-![Audit Status](https://github.com/Webdown404/ssh-manager/workflows/.github/workflows/audit.yml/badge.svg)
+![Continuous Integration checks](https://github.com/Webdown404/ssh-manager/workflows/Continuous%20Integration%20checks/badge.svg)
+![Security Audit](https://github.com/Webdown404/ssh-manager/workflows/Security%20Audit/badge.svg)
 
 ## Requirement
 This project required :
