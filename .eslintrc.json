@@ -14,7 +14,8 @@
     "rules": {
         "indent": [2, 4, { "SwitchCase": 1 }],
         "no-tabs": 0,
-        "no-console": "off"
+        "no-console": "off",
+        "no-async-promise-executor": 0
     },
     "parserOptions": {
         "ecmaVersion": 8
