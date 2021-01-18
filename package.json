@@ -1,6 +1,6 @@
 {
   "name": "@yungvenuz/ssh-manager-cli",
-  "version": "0.9.8",
+  "version": "0.9.9",
   "description": "A ssh manager",
   "main": "./bin/ssh-manager.sh",
   "preferGlobal": true,
@@ -38,7 +38,7 @@
     "type": "git",
     "url": "git+https://github.com/yviscool/ssh-manager.git"
   },
-  "author": "webdown404",
+  "author": "yungvenuz",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/yviscool/ssh-manager/issues"
