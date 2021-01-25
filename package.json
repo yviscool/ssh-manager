@@ -10,6 +10,7 @@
     "fuse.js": "^3.6.1",
     "inquirer": "^3.3.0",
     "inquirer-autocomplete-prompt": "^0.12.2",
+    "inquirer-number-plus": "^1.0.0",
     "mkdirp": "^0.5.5",
     "prettyjson": "^1.2.1",
     "replace": "^1.2.0",
